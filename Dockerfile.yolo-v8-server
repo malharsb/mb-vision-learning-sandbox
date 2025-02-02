@@ -1,0 +1,32 @@
+# Python base image that supports ARM architecture
+FROM python:3.10-slim
+
+# No interactive prompts when installing
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Python deps
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        git \
+        libglib2.0-0 libsm6 libxext6 libxrender-dev \
+        build-essential \
+        ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip
+RUN pip install --upgrade pip
+
+# Install ultralytics, and other libraries
+RUN pip install ultralytics fastapi uvicorn[standard] opencv-python-headless python-multipart
+
+# Create working directory
+WORKDIR /app
+
+# Copy main.py into container
+COPY /src/yolo_v8_server.py /app/yolo_v8_server.py
+
+# Expose server port
+EXPOSE 8000
+
+# Run the server
+CMD ["uvicorn", "yolo_v8_server:app", "--host", "0.0.0.0", "--port", "8000"]

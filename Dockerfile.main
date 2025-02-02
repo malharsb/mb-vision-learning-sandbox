@@ -1,0 +1,31 @@
+# Python base image
+FROM python:3.10-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy the Python script to the app directory inside the container
+COPY /src/main.py /app
+
+# Install system dependencies for OpenCV, etc.
+RUN apt-get update && \
+    apt-get install -y \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Python dependencies
+RUN pip install --no-cache-dir \
+    opencv-python-headless \
+    requests \
+    Pillow \
+    numpy
+
+# Set environment variable to avoid cv2 error in headless environments (no GUI)
+ENV DISPLAY=:0
+
+# Add a volume for the video file
+VOLUME ["/data"]
+
+# Run the script
+CMD ["python", "main.py"]
