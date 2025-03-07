@@ -1,4 +1,4 @@
-# Containerized microservices vision and learning tasks
+# Containerized microservices for vision and learning tasks
 
 Current goal: Run a yolo-v8 server and a client for video inference
 
