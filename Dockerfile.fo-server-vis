@@ -1,0 +1,20 @@
+# Official python image
+FROM python:3.10-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies (including libcurl4)
+RUN apt-get update && apt-get install -y libcurl4 && rm -rf /var/lib/apt/lists/*
+
+# Install dependencies
+RUN pip install --no-cache-dir fiftyone torch torchvision matplotlib
+
+# Expose FiftyOne's default port
+EXPOSE 5151
+
+# Copy script into container 
+COPY src/fifty_one_vis.py /app/fifty_one_vis.py
+
+# Set command to run the script
+CMD ["python", "/app/fifty_one_vis.py"]
