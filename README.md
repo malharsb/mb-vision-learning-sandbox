@@ -1,9 +1,9 @@
-# Containerized microservices for vision and learning tasks
+## Containerized Microservices and Tools
 
-1. YOLOv8 server-client
+1. YOLOv8 server-client containers
 2. Image dataset visualization using fiftyone
 3. Scripts for creating videos from image frames
-4. Scripts to stich images to create panoramic images
+4. Scripts to stich images
 
 
 ## Prerequisites
@@ -31,4 +31,4 @@ E.g. `curl -X POST -F "file=@fruit_1.jpg" http://localhost:8000/predict`
 `docker run -it --rm -p 5151:5151 fifty-one-vis`
 
 #### Access UI
-In a local browser, search for localhost:5151
+At localhost:5151 in a browser
